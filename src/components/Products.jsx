@@ -23,7 +23,7 @@ const Products = () => {
           value?.map((e, i) => {
             // if (from == e.category) {
               return (
-                <Link key={i} to={`${e.id}`}><Cards value={e} /></Link>)
+                <Link key={i} to={`${e.productId}`}><Cards value={e} /></Link>)
             // }
           })
         }

@@ -26,13 +26,31 @@ export const addToCart=createAsyncThunk('addToCart',async({id,token})=>{
 })
 //Method for showing cart Items
 export const getAllCartItems=createAsyncThunk('getAllCartItems',async(token)=>{
-    console.log(token,"jj");
     const res=await axios.get(`https://localhost:7288/api/Cart/get-all`,{
         headers:{
             Authorization:`Bearer ${token}`,
         }
     })
     return res.data;
+})
+//Method to delete the cartItems
+export const  deleteCartItem=createAsyncThunk('deleteCartItem',async({id,token})=>{
+    const res=await axios.delete(`https://localhost:7288/api/Cart/remove-product?productId=${id} `,{
+        headers:{
+            Authorization:`Bearer ${token}`,
+        }
+    })
+    return res.data
+})
+//Method for Update Quantity in cart
+export const  updateQuantityInCart=createAsyncThunk('updateQuantityInCart',async({productId,value,token})=>{
+    const res=await axios.put(`https://localhost:7288/api/Cart/Update-Count?productId=${productId}&value=${value}`,null,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    window.alert("added succesfully")
+    return res.data
 })
 export const  addproduct=createAsyncThunk('addProducts',async({category,type,name,caption,price,url})=>{
     const res=await axios.post('http://localhost:8000/products',{category,type,name,caption,price,url})

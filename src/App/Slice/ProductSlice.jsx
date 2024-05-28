@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { products } from "../Thunk/ProductThunk";
-import{searchProducts,getAllCartItems,addToCart,deleteCart,productById} from "../Thunk/ProductThunk"
+import{searchProducts,getAllCartItems,addToCart,deleteCartItem,productById,updateQuantityInCart} from "../Thunk/ProductThunk"
 
 const initialState={
     products:[],
@@ -29,13 +29,15 @@ export const productSlice=createSlice({
             state.cart=action.payload;
             console.log(state.cart);
           })//
-        builder.addCase(deleteCart.fulfilled,(state,action)=>{
+        builder.addCase(deleteCartItem.fulfilled,(state,action)=>{
+            console.log(action.payload);
             alert("Deleted  successfully")
           })
-        // builder.addCase(deleteCart.fulfilled,()=>{
-        //     window.alert("Item Deleted successfully")
-        //     window.location.reload()
-        //   })
+        builder.addCase(updateQuantityInCart.fulfilled,(state,action)=>{
+            console.log(action.payload,"jjjjj");
+            window.alert("Item Deleted successfully")
+            window.location.reload()
+          })
     },
 })
 export default productSlice.reducer;

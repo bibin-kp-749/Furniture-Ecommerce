@@ -41,7 +41,7 @@ const Hero = () => {
     // } else {
     //   window.alert("please login");
     // }
-    dispatch(addToCart({id:15,token:token}))
+    dispatch(addToCart({id:16,token:token}))
   }
   product&&
   console.log(product);
