@@ -17,7 +17,7 @@ const Hero = () => {
   let flag = false;
   const { id } = useParams();
   const [value, setValue] = useState([]);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);  
   useEffect(() => {
     dispatch(productById(15));
     // dispatch(cartProduct());

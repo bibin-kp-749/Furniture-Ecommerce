@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useEffect} from 'react'
 import '../css/component.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartItems,deleteCartItem,updateQuantityInCart } from '../App/Thunk/ProductThunk';
@@ -10,11 +10,10 @@ const CartPage =() => {
     const token = Cookies.get('token');
     useEffect(() => {
         dispatch(getAllCartItems(token));
-    }, [])
+    },[])
     const updateCount=(productid,value)=>{
         dispatch(updateQuantityInCart({productId:productid,value:value,token:token}));
     }
-    console.log(carts);
     return (
         <div className='mt-48 flex flex-col items-center'>{
             carts &&
@@ -29,7 +28,7 @@ const CartPage =() => {
                                     <p>Quantity : {e.quantity}</p>
                                     <button onClick={()=>updateCount(e.productId,1)}>Add</button> 
                                     <button onClick={()=>updateCount(e.productId,-1)}>Minus</button>
-                                    <p className='text-xl font-bold text-gray-400'>PRICE - ₹{e.originalPrice} </p>
+                                    <p className='text-xl font-bold text-gray-400'>PRICE - ₹{e.quantity*e.originalPrice} </p>
                                 </div>
                                 <div className="card-actions justify-end">
                                     <button className="btn cartbtn " onClick={() => dispatch(deleteCartItem({id:e.productId,token:token}))}>DELETE</button>

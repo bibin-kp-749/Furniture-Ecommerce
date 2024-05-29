@@ -14,7 +14,6 @@ export const loginUser=createAsyncThunk('loginUser',async(user)=>{
 //Method for getting all users
 export const getAllUsers=createAsyncThunk('getAllUsers',async()=>{
     const res=await axios.get('https://localhost:7288/api/User/get-all');
-    console.log(res);
     return res.data
 })
 export const deleteUser=createAsyncThunk('deleteUser',async(id)=>{

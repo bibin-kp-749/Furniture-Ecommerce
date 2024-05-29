@@ -6,6 +6,7 @@ import { deleteUser, userBlock,getAllUsers } from '../App/Thunk/Userthunk'
 
 const Table = () => {
   const user = useSelector(state => state.user.user);
+  console.log(user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUsers());
@@ -34,7 +35,7 @@ const Table = () => {
           <tbody>
             {
               user && user.map(e => {
-                if (e.email != "admin@gmail.com" && e.email != "admin12345") {
+                // if (e.email != "admin@gmail.com" && e.email != "admin12345") {
                   return (
                     <tr >
                       <th>
@@ -46,7 +47,7 @@ const Table = () => {
                       </th>
                       <td>
                         <div className="flex items-center gap-3">
-                          <p>{e.username}</p>
+                          <p>{e.userName}</p>
                         </div>
                       </td>
                       <td>
@@ -61,7 +62,7 @@ const Table = () => {
                       </td>
                     </tr>
                   )
-                }
+                // }
 
               })
             }

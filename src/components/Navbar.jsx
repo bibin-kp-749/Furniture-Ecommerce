@@ -3,15 +3,23 @@ import '../css/component.css'
 import LoginPage from '../pages/LoginPage'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import Cookies from 'js-cookie'
 import '../App.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { searchItem } from '../App/Slice/searchSlice'
+import { getWishList } from '../App/Thunk/ProductThunk'
 
 const Navbar = () => {
     const dispatch = useDispatch();
+    const data=useSelector(state=>state.product.wishList)
     let name = localStorage.getItem('name');
     const navigate = useNavigate();
+    const token = Cookies.get('token');
     const id = localStorage.getItem('id');
+    const WishListHandler=async ()=>{
+        document.getElementById('my_modal_2').showModal();
+        dispatch(getWishList(token));
+    }
     return (
         <div id='navbar-section p-0' className={`${(id == '0001') ? 'hidden' : ''}`}>
             <div className="navbar  flex bg ">
@@ -29,12 +37,30 @@ const Navbar = () => {
 
                         </div>
                     </div>
+                    <div>
+                        {/* You can open the modal using document.getElementById('ID').showModal() method */}
+                        <button className="btn" onClick={WishListHandler}>open modal</button>
+                        <dialog id="my_modal_2" className="modal">
+                            <div className="modal-box">
+                                <form method="dialog">
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                </form>
+                                <div>
+                                    {
+                                        data.map((element,i )=> {
+                                            return <h1 key={i}>{element.productName}</h1>
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </dialog>
+                    </div>
                     <div className="dropdown dropdown-end ml-1 md:ml-7">
                         <Link to='cart'>
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                                 <div className="indicator">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                                    {/* <span className="badge badge-sm indicator-item"></span> */}
+                                    {/* <span className="badge badge-sm indicator-item"></span> */}Cart
                                 </div>
                             </div>
                         </Link>
@@ -56,23 +82,24 @@ const Navbar = () => {
                                     <span className="badge">New</span>
                                 </a>
                             </li>
-                            <li><div >
-                                <a className="w-24 h-2 flex items-center   font-medium  rounded-lg mb-1 mt-3" onClick={id ? () => {
-                                    localStorage.removeItem('name');
-                                    localStorage.removeItem('id');
-                                    navigate('/');
-                                } : () => {
-                                    document.getElementById('my_modal_3').showModal();
-                                }}  > {id ? "logout" : "login"} </a>
-                                <dialog id="my_modal_3" className="modal ">
-                                    <div className="modal-box bg-gray-200">
-                                        <form method="dialog">
-                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                            <LoginPage />
-                                        </form>
-                                    </div>
-                                </dialog>
-                            </div></li>
+                            <li>
+                                <div >
+                                    <a className="w-24 h-2 flex items-center   font-medium  rounded-lg mb-1 mt-3" onClick={id ? () => {
+
+                                        navigate('/');
+                                    } : () => {
+                                        document.getElementById('my_modal_3').showModal();
+                                    }}  > {id ? "logout" : "login"} </a>
+                                    <dialog id="my_modal_3" className="modal ">
+                                        <div className="modal-box bg-gray-200">
+                                            <form method="dialog">
+                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                <LoginPage />
+                                            </form>
+                                        </div>
+                                    </dialog>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

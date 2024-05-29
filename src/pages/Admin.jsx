@@ -14,7 +14,7 @@ const Admin = () => {
         window.location.reload();
     }
     return (
-        <div className='admin min-h-screen w-screen'>
+        <div className='admin min-h-screen w-screen mt-96'>
             <div className='flex justify-end items-center h-10  '>
                 <button className=' sm:mr-10 sm:mt-14 h:10 w-20 mr-2 m-5 bg-gray-300 text-gray-800 sm:w-24 sm:h-10 hover:bg-gray-700 hover:text-white font-semibold rounded-md' onClick={Logout}>LogOut</button>
             </div>

@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { products } from "../Thunk/ProductThunk";
-import{searchProducts,getAllCartItems,addToCart,deleteCartItem,productById,updateQuantityInCart} from "../Thunk/ProductThunk"
+import{searchProducts,deleteProduct,getAllCartItems,addToCart,deleteCartItem,productById,updateQuantityInCart,getWishList,addproduct} from "../Thunk/ProductThunk"
 
 const initialState={
     products:[],
     product:{},
     cart:[],
+    wishList:[],
 }
 
 export const productSlice=createSlice({
@@ -28,15 +29,23 @@ export const productSlice=createSlice({
         builder.addCase(getAllCartItems.fulfilled,(state,action)=>{
             state.cart=action.payload;
             console.log(state.cart);
-          })//
+          })
         builder.addCase(deleteCartItem.fulfilled,(state,action)=>{
             console.log(action.payload);
             alert("Deleted  successfully")
           })
         builder.addCase(updateQuantityInCart.fulfilled,(state,action)=>{
-            console.log(action.payload,"jjjjj");
-            window.alert("Item Deleted successfully")
+            window.alert("Updated")
             window.location.reload()
+          })
+          builder.addCase(getWishList.fulfilled,(state,action)=>{
+            state.wishList=action.payload;
+          })
+          builder.addCase(addproduct.fulfilled,()=>{
+            console.log("Added successfully");
+          })
+          builder.addCase(deleteProduct.fulfilled,()=>{
+            console.log("Deleted successsfully successfully");
           })
     },
 })
