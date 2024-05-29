@@ -43,7 +43,7 @@ const AddProduct = () => {
     dispatch(UpdateProduct({id:id,formData:formData}));
   }
   return (
-    <div className='m-auto w-11/12 flex justify-center md:min-w-full mt-96'>
+    <div className='m-auto w-11/12 flex justify-center md:min-w-full '>
       <div  className='mt-14  flex flex-col justify-center items-center ' style={{ width: '100%' }}>
         {/* <label className="input input-bordered border-blue-300 flex bg-white  items-center gap-2 m-3 w-80  sm:w-96 md:w-5/12 md:h-16">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="addproduct-svg w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>

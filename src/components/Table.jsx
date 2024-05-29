@@ -2,11 +2,10 @@ import React from 'react'
 import { useEffect } from 'react'
 import '../index.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteUser, userBlock,getAllUsers } from '../App/Thunk/Userthunk'
+import { unBlockUser, getAllUsers, blockUser } from '../App/Thunk/Userthunk'
 
 const Table = () => {
   const user = useSelector(state => state.user.user);
-  console.log(user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUsers());
@@ -14,8 +13,10 @@ const Table = () => {
   const Delete = (id) => {
     dispatch(deleteUser(id));
   }
-  const Block = async (id, current) => {
-    dispatch(userBlock({ id, current }));
+  const blockAndUnBlock = async (id, isstatus) => {
+    (isstatus == true) ?
+      dispatch(blockUser({ id })) :
+      dispatch(unBlockUser({ id }));
     window.location.reload();
   }
   return (
@@ -34,41 +35,36 @@ const Table = () => {
           </thead>
           <tbody>
             {
-              user && user.map(e => {
-                // if (e.email != "admin@gmail.com" && e.email != "admin12345") {
-                  return (
-                    <tr >
-                      <th>
-                        <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
-                            <img src="https://icons.veryicon.com/png/o/business/multi-color-financial-and-business-icons/user-139.png" alt="Avatar Tailwind CSS Component" />
-                          </div>
+              user && user.map((e, i) => {
+                return (
+                  <tr key={i}>
+                    <th>
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <img src="https://icons.veryicon.com/png/o/business/multi-color-financial-and-business-icons/user-139.png" alt="Avatar Tailwind CSS Component" />
                         </div>
-                      </th>
-                      <td>
-                        <div className="flex items-center gap-3">
-                          <p>{e.userName}</p>
-                        </div>
-                      </td>
-                      <td>
-                        <p>{e.email}</p>
-                      </td>
-                      <td>
-                        <p>{e.phone}</p>
-                      </td>
-                      <td className='flex justify-end'>
-                        <button className='login-btn w-24 font-medium h-10 m-2 text-gray-900' onClick={() => Delete(e.id)}>Delete</button>
-                        <button className='login-btn w-24 h-10 m-2 font-medium text-gray-900' onClick={() => Block(e.id, e.status)}>{(e.status == true) ? "Block" : "UnBlock"}</button>
-                      </td>
-                    </tr>
-                  )
-                // }
-
+                      </div>
+                    </th>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <p>{e.userName}</p>
+                      </div>
+                    </td>
+                    <td>
+                      <p>{e.email}</p>
+                    </td>
+                    <td>
+                      <p>{e.phone}</p>
+                    </td>
+                    <td className='flex justify-end'>
+                      <button className='login-btn w-24 font-medium h-10 m-2 text-gray-900' onClick={() => Delete(e.id)}>Delete</button>
+                      <button className='login-btn w-24 h-10 m-2 font-medium text-gray-900' onClick={() => blockAndUnBlock(e.userId, e.isstatus)}>{(e.isstatus == true) ? "Block" : "UnBlock"}</button>
+                    </td>
+                  </tr>
+                )
               })
             }
-
           </tbody>
-
         </table>
       </div>
     </div>

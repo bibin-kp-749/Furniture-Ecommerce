@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 //Method for user registration
 export const  registerUser=createAsyncThunk('registerUser',async({username,phone,email,password})=>{
@@ -13,40 +14,41 @@ export const loginUser=createAsyncThunk('loginUser',async(user)=>{
 })
 //Method for getting all users
 export const getAllUsers=createAsyncThunk('getAllUsers',async()=>{
-    const res=await axios.get('https://localhost:7288/api/User/get-all');
-    return res.data
+    const token = Cookies.get('token');
+    const res=await axios.get('https://localhost:7288/api/User/get-all',{
+        headers:{
+            Authorization:`Bearer ${token}`,
+        }
+    });
+    console.log(res.data);
+    return res.data;
 })
-export const deleteUser=createAsyncThunk('deleteUser',async(id)=>{
-    const res=await axios.delete(`http://localhost:8000/person/${id}`)
-    alert("person deleted")
-})
-export const deleteProduct=createAsyncThunk('deleteProduct',async(id)=>{
-    const res=await axios.delete(`http://localhost:8000/products/${id}`)
-})
-export const  addproduct=createAsyncThunk('addProducts',async({category,type,name,caption,price,url})=>{
-    const res=await axios.post('http://localhost:8000/products',{category,type,name,caption,price,url})
-    window.alert("added succesfully")
-    return res.data
-})
-export const  updateProduct=createAsyncThunk('updateProduct',async({category,type,name,caption,price,url,id})=>{
-    const res=await axios.put(`http://localhost:8000/products/${id}`,{id,category,type,name,caption,price,url})
-    window.alert("updated succesfully")
-    return res.data
-})
-export const  cartProduct=createAsyncThunk('cartProduct',async()=>{
-    const res=await axios.get('http://localhost:8000/cart')
-    return res.data
-})
-export const  userBlock=createAsyncThunk('userBlock',async({id,current})=>{
-    const res=await axios.patch(`http://localhost:8000/person/${id}`, { status: !current })
-    console.log("successfully blocked");
-})
-export const  deleteCart=createAsyncThunk('deleteCart',async(id)=>{
+//Method for Blocking User
+export const blockUser=createAsyncThunk('blockUser',async({id})=>{
     console.log(id);
-    const res=await axios.delete(`http://localhost:8000/cart/${id}`)
-    console.log("Item deleted");
+    const token = Cookies.get('token');
+    console.log(token);
+    const res=await axios.put(`https://localhost:7288/api/User/blockUser?id=${id}`,null,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    alert("person Blocked")
 })
-export const addToCart=createAsyncThunk('addToCart',async({userid,quantity, ...value })=>{
-    const res=axios.post(`http://localhost:8000/cart`, {userid,quantity, ...value });
-    return res.data
+//Method for Unblocking User
+export const unBlockUser=createAsyncThunk('unBlockUser',async({id})=>{
+    console.log(id);
+    const token = Cookies.get('token');
+    console.log(token);
+    const res=await axios.put(`https://localhost:7288/api/User/unblockUser?id=${id}`,null,{
+        headers:{
+            Authorization:`Bearer ${token}`,
+        }
+    })
+    alert("person unBlocked")
 })
+// //Method for Delete User
+// export const deleteUser=createAsyncThunk('deleteUser',async(id)=>{
+//     const res=await axios.delete(`http://localhost:8000/person/${id}`)
+//     alert("person deleted")
+// })

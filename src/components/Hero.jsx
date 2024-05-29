@@ -12,39 +12,15 @@ const Hero = () => {
   const dispatch = useDispatch();
   const product = useSelector(state => state.product.product);
   const token = Cookies.get('token');
-  console.log(token,"hero");
   //const carts = useSelector(state => state.products.cart);
-  let flag = false;
-  const { id } = useParams();
-  const [value, setValue] = useState([]);
-  const [quantity, setQuantity] = useState(1);  
+  const { id } = useParams(); 
   useEffect(() => {
-    dispatch(productById(15));
-    // dispatch(cartProduct());
-    // product.map(e => {
-    //   (id == e.id) ? setValue(e) : null;
-    // })
+    dispatch(productById(id));
   }, [])
   const handle = () => {
-    // carts.map(e => {
-    //   if (e.id == value.id) {
-    //     flag = true;
-    //   }
-    // })
-    // if (userid) {
-    //   if (flag == false) {
-    //     dispatch(addToCart({ userid, quantity, ...value }));
-    //     navigate('/');
-    //   } else if (userid) {
-    //     window.alert("item already exist");
-    //   }
-    // } else {
-    //   window.alert("please login");
-    // }
     dispatch(addToCart({id:16,token:token}))
-  }
-  product&&
-  console.log(product);
+  };
+ if(product)
   return (
     <div >
       <div className="hero flex justify-center mt-44">
@@ -54,8 +30,8 @@ const Hero = () => {
             <div></div>
             <h1 className="text-2xl font-semibold text-gray-800 font-sans">{product.productName}</h1>
             <p className='text-xl font-medium m-2 text-gray-600 font-mono my-5'>{product.productCaption}</p>
-            <div >&nbsp;<button className='text-4xl font-bold text-gray-700 h-6 w-6 pr-3' onClick={() => (quantity) ? setQuantity(pre => pre - 1) : null}>-</button>&nbsp;&nbsp;<span className='text-xl font-bold text-gray-400'>{quantity}</span> &nbsp;&nbsp;<button className='text-3xl font-bold text-gray-700 h-6 w-6 pr-3' onClick={() => setQuantity(pre => pre + 1)}>&nbsp;+</button></div>
-            <p className="py-6 text-gray-800 font-bold">₹&nbsp;{quantity * product.offerPrice}</p>
+            {/* <div >&nbsp;<button className='text-4xl font-bold text-gray-700 h-6 w-6 pr-3' onClick={() => (quantity) ? setQuantity(pre => pre - 1) : null}>-</button>&nbsp;&nbsp;<span className='text-xl font-bold text-gray-400'>{quantity}</span> &nbsp;&nbsp;<button className='text-3xl font-bold text-gray-700 h-6 w-6 pr-3' onClick={() => setQuantity(pre => pre + 1)}>&nbsp;+</button></div> */}
+            <p className="py-6 text-gray-800 font-bold">₹&nbsp;{product.originalPrice}</p>
             <button className="bg addtocart font-medium p-2 rounded-lg" onClick={handle}>Add to Cart</button>
           </div>
         </div>

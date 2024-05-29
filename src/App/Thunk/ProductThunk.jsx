@@ -23,6 +23,7 @@ console.log(er);
 //method for Add new Product
 export const  addproduct=createAsyncThunk('addProducts',async(formdata)=>{
     try{console.log(formdata,"kkkkk");
+    const token = Cookies.get('token');
     const res=await axios.post('https://localhost:7288/api/Product/add-product',formdata,{
         headers:{
             Authorization:`Bearer ${token}`
@@ -30,7 +31,7 @@ export const  addproduct=createAsyncThunk('addProducts',async(formdata)=>{
     })
     window.alert("added succesfully")
     return res.data}catch(er){
-        console.log(er);
+        console.log(er,"jjj");
     }
 })
 //Method for Delete Product
@@ -97,21 +98,24 @@ export const  getWishList=createAsyncThunk('getWishList',async(token)=>{
     })
     return res.data
 })
-export const  updateProduct=createAsyncThunk('updateProduct',async({category,type,name,caption,price,url,id})=>{
-    const res=await axios.put(`http://localhost:8000/products/${id}`,{id,category,type,name,caption,price,url})
-    window.alert("updated succesfully")
+//method 
+export const InitializePayment=createAsyncThunk('InitializePayment',async({name,email,phoneNumber,address,amount})=>{
+    const token = Cookies.get('token');
+    const res=await axios.post(`https://localhost:7288/api/Order/GenerateOrder`,{name,email,phoneNumber,address,amount},{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    console.log(res.data);
     return res.data
 })
-export const  cartProduct=createAsyncThunk('cartProduct',async()=>{
-    const res=await axios.get('http://localhost:8000/cart')
+export const ConfirmPayment=createAsyncThunk('ConfirmPayment',async(response)=>{
+    const token = Cookies.get('token');
+    const res=await axios.post(`https://localhost:7288/api/Order/GenerateOrder`,response,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    console.log(res.data);
     return res.data
-})
-export const  userBlock=createAsyncThunk('userBlock',async({id,current})=>{
-    const res=await axios.patch(`http://localhost:8000/person/${id}`, { status: !current })
-    console.log("successfully blocked");
-})
-export const  deleteCart=createAsyncThunk('deleteCart',async(id)=>{
-    console.log(id);
-    const res=await axios.delete(`http://localhost:8000/cart/${id}`)
-    console.log("Item deleted");
 })

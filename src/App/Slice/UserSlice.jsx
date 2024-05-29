@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import  {deleteUser,loginUser,getAllUsers,registerUser,userBlock}  from '../Thunk/Userthunk';
+import  {loginUser,getAllUsers,registerUser,blockUser, unBlockUser}  from '../Thunk/Userthunk';
 
 const initialState={
     user:[],
@@ -22,8 +22,11 @@ export const userSlice=createSlice({
         builder.addCase(registerUser.fulfilled,(state,action)=>{
             state.user=[...state.user,action.payload]
         })
-        builder.addCase(userBlock.fulfilled,()=>{
+        builder.addCase(blockUser.fulfilled,()=>{
             window.alert("user blocked")
+        })
+        builder.addCase(unBlockUser.fulfilled,()=>{
+            window.alert("user Un blocked")
         })
       },
 })
