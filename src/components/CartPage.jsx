@@ -1,27 +1,28 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import '../css/component.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCartItems,ConfirmPayment,deleteCartItem, updateQuantityInCart, InitializePayment } from '../App/Thunk/ProductThunk';
+import { getAllCartItems, ConfirmPayment, deleteCartItem, updateQuantityInCart, InitializePayment } from '../App/Thunk/ProductThunk';
 import Cookies from 'js-cookie';
 
 const CartPage = () => {
     const dispatch = useDispatch();
     const carts = useSelector(state => state.product.cart);
-    const orderId = useSelector(state => state.product.orderId);
-    console.log(orderId);
     const token = Cookies.get('token');
+    const[name,setName]=useState('');
+    const[email,setEmail]=useState('');
+    const[phoneNumber,setPhoneNumber]=useState();
+    const[city,setCity]=useState();
+    const[amount,setAmount]=useState(0)
     useEffect(() => {
         dispatch(getAllCartItems(token));
-    }, [])
+    },[])
     const updateCount = (productid, value) => {
         dispatch(updateQuantityInCart({ productId: productid, value: value, token: token }));
     }
     //-----------------------------------------------------------
     const handleRazorpayPayment = async () => {
         const data = {};
-        console.log("enetered");
         const response = await dispatch(InitializePayment({ name: "bibin", email: "bibin@gmail.com", phoneNumber: 1234567890, address: "bbjjjjjjjbb", amount: 200 })).then(res => res.payload);
-        console.log(response);
         const options = {
             key: `rzp_test_n2WhJM0xSFTrwb`,
             amount: response.amount,
@@ -29,20 +30,21 @@ const CartPage = () => {
             description: 'Pro Membership',
             order_id: response.id,
             handler: (response) => {
-                console.log("hh");
                 dispatch(ConfirmPayment(response))
-              },
-              prefill: {
+            },
+            prefill: {
                 name: "TESTUSER",
                 email: "testuser@mail.com",
-              },
-              theme: {
+            },
+            theme: {
                 color: '#F37254'
-              }
+            }
         };
         const rzp1 = new window.Razorpay(options);
-    rzp1.open();
+        console.log(options);
+        rzp1.open();
     }
+    console.log(amount);
     return (
         <div className='mt-48 flex flex-col items-center'>{
             carts &&
@@ -67,8 +69,35 @@ const CartPage = () => {
                 )
             }
             )}
-            <div className='my-12'><p className='text-black font-medium'>TOTAL PRICE : ₹</p></div>
-            <button className="purchase-btn cartbtn max-w-72 min-h-14" onClick={handleRazorpayPayment}>Purchace</button>
+            <div className='my-12'><p className='text-black font-medium'>TOTAL PRICE : ₹ {amount}</p></div>
+            <label htmlFor="my_modal_7" className="btn">Purchase</label>
+            <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+            <div className="modal" role="dialog">
+                <div className="modal-box">
+                    <label className="input input-bordered flex items-center gap-2">
+                        Name
+                        <input type="text" className="grow"  required/>
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2">
+                        Email
+                        <input type="text" className="grow"  required/>
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2">
+                        Phone
+                        <input type="text" className="grow"  required/>
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2">
+                        City
+                        <input type="text" className="grow"  required/>
+                    </label>
+                    <label className="input input-bordered flex items-center gap-2">
+                        Address
+                        <input type="text" className="grow"  required/>
+                    </label>
+                    <button className="purchase-btn cartbtn max-w-72 min-h-14" onClick={handleRazorpayPayment}>Purchace</button>
+                </div>
+                <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
+            </div>
         </div>
 
     )

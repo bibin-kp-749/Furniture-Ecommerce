@@ -106,12 +106,12 @@ export const InitializePayment=createAsyncThunk('InitializePayment',async({name,
             Authorization:`Bearer ${token}`
         }
     })
-    console.log(res.data);
     return res.data
 })
 export const ConfirmPayment=createAsyncThunk('ConfirmPayment',async(response)=>{
     const token = Cookies.get('token');
-    const res=await axios.post(`https://localhost:7288/api/Order/GenerateOrder`,response,{
+    console.log(response,"lloo");
+    const res=await axios.post(`https://localhost:7288/api/Order/CapturePayment`,response,{
         headers:{
             Authorization:`Bearer ${token}`
         }

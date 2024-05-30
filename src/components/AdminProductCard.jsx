@@ -29,23 +29,6 @@ const AdminProductCard = () => {
       {
         product &&
         product.map((e, i) => {
-          // if (category == "all") {
-          //   return (
-          //     <div key={i} className='mb-8 flex justify-center md:4/6'>
-          //       <div className="card card-side bg-gray-200 shadow-xl flex flex-wrap p-0 rounded-md sm:w-5/6 md:2/6">
-          //         <figure className='max-w-full'><img src={e.url} alt="Movie" className='w-full rounded-md sm:w-60 md:w-full md:h-72' /></figure>
-          //         <div className="card-body sm:flex-1 md:flex-1">
-          //           <h2 className="card-title">{e.name}</h2>
-          //           <p>{e.caption}</p>
-          //           <p>{e.price}</p>
-          //           <div className="card-actions justify-end">
-          //             <Link to={`addproduct/${e.id}`}><button className="btn btn-primary" >Edit</button></Link>
-          //             <button className="btn btn-primary" onClick={() => Delete(e.id)}>Delete</button>
-          //           </div>
-          //         </div>
-          //       </div>
-          //     </div>)
-          // } else if (e.category == category) {
             return (
               <div key={i} className='mb-8 flex justify-center md:4/6'>
                 <div className="card card-side bg-gray-200 shadow-xl flex flex-wrap p-0 rounded-md sm:w-5/6 md:2/6">
@@ -62,9 +45,6 @@ const AdminProductCard = () => {
                 </div>
               </div>
             )
-          // } else {
-          //   null
-          // }
         })
       }
     </div>
