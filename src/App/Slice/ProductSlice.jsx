@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { products } from "../Thunk/ProductThunk";
-import{searchProducts,ConfirmPayment,deleteProduct,InitializePayment,getAllCartItems,addToCart,deleteCartItem,productById,updateQuantityInCart,getWishList,addproduct} from "../Thunk/ProductThunk"
+import{searchProducts,createOrder,ConfirmPayment,deleteProduct,InitializePayment,getAllCartItems,addToCart,deleteCartItem,productById,updateQuantityInCart,getWishList,addproduct} from "../Thunk/ProductThunk"
 
 const initialState={
     products:[],
     product:{},
     cart:[],
     wishList:[],
-    orderId:'',
+    paymentStatus:{},
 }
 
 export const productSlice=createSlice({
@@ -49,11 +49,16 @@ export const productSlice=createSlice({
             console.log("Deleted successsfully successfully");
           })
           builder.addCase(InitializePayment.fulfilled,(state,action)=>{
-            state.orderId=action.payload;
+            state.OrderDetails=action.payload;
+            console.log(state.OrderDetails,"InitializePaymentbibin");
         })
         builder.addCase(ConfirmPayment.fulfilled,(state,action)=>{
-          console.log(action.payload);
+          state.paymentStatus=action.payload;
+          console.log(action.payload,"ConfirmPaymentbibin");
       })
+      builder.addCase(createOrder.fulfilled,(state,action)=>{
+        console.log("");
+    })
     },
 })
 export default productSlice.reducer;

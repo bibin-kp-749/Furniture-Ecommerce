@@ -98,20 +98,35 @@ export const  getWishList=createAsyncThunk('getWishList',async(token)=>{
     })
     return res.data
 })
-//method 
-export const InitializePayment=createAsyncThunk('InitializePayment',async({name,email,phoneNumber,address,amount})=>{
+//method for initializing payment
+export const InitializePayment=createAsyncThunk('InitializePayment',async({name,email,phoneNumber,customerCity,address,amount})=>{
+    console.log(name,email,phoneNumber,customerCity,address,amount);
     const token = Cookies.get('token');
-    const res=await axios.post(`https://localhost:7288/api/Order/GenerateOrder`,{name,email,phoneNumber,address,amount},{
+    const res=await axios.post(`https://localhost:7288/api/Order/GenerateOrder`,{name,email,phoneNumber,customerCity,address,amount},{
         headers:{
             Authorization:`Bearer ${token}`
         }
     })
     return res.data
 })
+//method to confirm payment
 export const ConfirmPayment=createAsyncThunk('ConfirmPayment',async(response)=>{
     const token = Cookies.get('token');
     console.log(response,"lloo");
     const res=await axios.post(`https://localhost:7288/api/Order/CapturePayment`,response,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    if(res.data)
+    return response;
+})
+//method to create order
+export const createOrder=createAsyncThunk('createOrder',async({orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,transactionId,ProductIds})=>{
+    const token = Cookies.get('token');
+    console.log("Iam here at create oreder");
+    console.log(orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,ProductIds);
+    const res=await axios.post(`https://localhost:7288/api/Order/order`,{orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,transactionId,ProductIds},{
         headers:{
             Authorization:`Bearer ${token}`
         }
