@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {  products,deleteProduct } from '../App/Thunk/ProductThunk'
+import { searchProducts, products,deleteProduct } from '../App/Thunk/ProductThunk'
 
 const AdminProductCard = () => {
   const dispatch = useDispatch();
+  const[search,setSearch]=useState();
   const [category, setCategory] = useState("all");
   const product = useSelector(state => state.product.products);
   const Delete = (id) => {
-    console.log(id,"kk");
     dispatch(deleteProduct(id));
   }
   useEffect(() => {
     dispatch(products());
   }, [])
+  useEffect(() => {
+    dispatch(searchProducts(search));
+}, [search])
   return (
     <div className='w-80 sm:w-full mt-10'>
+      <input type="text"  className='bg-white flex 'onChange={e=>setSearch(e.target.value)}/>
       <div className='mb-12 overflow-auto no-scrollbar sm:mr-5' >
         <ul className='no-scrollbar flex w-fit sm:w-full  justify-evenly  text-gray-800 bg-gray-200 items-center h-10 align-middle overflow-scroll rounded-lg cursor-pointer'>
           <li className='min-w-32 hover:font-semibold' onClick={() => setCategory("offers")}>Offers</li>

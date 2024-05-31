@@ -21,10 +21,8 @@ const Products = () => {
       <div className='products-item flex flex-wrap  justify-evenly ' style={{ marginTop: '10rem' }} id='products-item '>
         {value &&
           value?.map((e, i) => {
-            // if (from == e.category) {
               return (
                 <Link key={i} to={`${e.productId}`}><Cards value={e} /></Link>)
-            // }
           })
         }
 

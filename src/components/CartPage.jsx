@@ -56,6 +56,7 @@ const CartPage = () => {
         return now.toISOString();
     }
         const OrderCreate=()=>{
+            // console.log(paymentStatus.razorpay_order_id,"llhi");
             if(paymentStatus.razorpay_order_id){
             dispatch(createOrder({orderId:paymentStatus.razorpay_order_id,customerName:name,customerEmail:email,customerPhoneNumber:phoneNumber,customerCity:city,customerHomeAddress:address,orderTime:getCurrentTimeISO(),OrderStatus:"Captured",Quantity:1,Price:200,transactionId:paymentStatus.razorpay_payment_id,ProductIds:[15]}))
             }

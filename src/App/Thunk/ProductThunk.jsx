@@ -98,6 +98,16 @@ export const  getWishList=createAsyncThunk('getWishList',async(token)=>{
     })
     return res.data
 })
+//method for deleting wishList
+export const  RemoveWishListItem=createAsyncThunk('RemoveWishListItem',async(id)=>{
+    const token = Cookies.get('token');
+    const res=await axios.delete(`https://localhost:7288/api/product/wishlist/${id}`,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    return res.data
+})
 //method for initializing payment
 export const InitializePayment=createAsyncThunk('InitializePayment',async({name,email,phoneNumber,customerCity,address,amount})=>{
     console.log(name,email,phoneNumber,customerCity,address,amount);
@@ -127,6 +137,42 @@ export const createOrder=createAsyncThunk('createOrder',async({orderId,customerN
     console.log("Iam here at create oreder");
     console.log(orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,ProductIds);
     const res=await axios.post(`https://localhost:7288/api/Order/order`,{orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,transactionId,ProductIds},{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    console.log(res.data);
+    return res.data
+})
+//method to create TotalRevenue
+export const TotalRevenue=createAsyncThunk('TotalRevenue',async()=>{
+    const token = Cookies.get('token');
+    console.log("Iam here at Total revenue");
+    const res=await axios.get(`https://localhost:7288/api/Order/Totalrevenue`,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    console.log(res.data);
+    return res.data
+})
+//method to create TotalProductsPurchased
+export const TotalProductsPurchased=createAsyncThunk('TotalProductsPurchased',async()=>{
+    const token = Cookies.get('token');
+    console.log("Iam here at Total revenue");
+    const res=await axios.get(`https://localhost:7288/api/Order/TotalProductsPurchased`,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    console.log(res.data);
+    return res.data
+})
+//method to create TotalProductsPurchased
+export const OrderDetailsByAdmin=createAsyncThunk('OrderDetailsByAdmin',async(id)=>{
+    const token = Cookies.get('token');
+    console.log("Iam here at Total OrderDetailsByAdmin",id);
+    const res=await axios.get(`https://localhost:7288/api/Order/OrderDetailsByAdmin?userId=${id}`,{
         headers:{
             Authorization:`Bearer ${token}`
         }

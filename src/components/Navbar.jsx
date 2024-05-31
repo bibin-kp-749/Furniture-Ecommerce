@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 import '../App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchItem } from '../App/Slice/searchSlice'
-import { getWishList } from '../App/Thunk/ProductThunk'
+import { getWishList,RemoveWishListItem } from '../App/Thunk/ProductThunk'
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const Navbar = () => {
         document.getElementById('my_modal_2').showModal();
         dispatch(getWishList(token));
     }
+    console.log(data,"lll");
     return (
         <div id='navbar-section p-0' className={`${(id == '0001') ? 'hidden' : ''}`}>
             <div className="navbar  flex bg ">
@@ -48,7 +49,17 @@ const Navbar = () => {
                                 <div>
                                     {
                                         data.map((element,i )=> {
-                                            return <h1 key={i}>{element.productName}</h1>
+                                            return <div className="indicator">
+                                                <div className="skeleton w-32 h-32">
+                                            <div className="card border ">
+                                              <div className="card-body max-w-52">
+                                                <img src={`https://localhost:7288${element.image}`} className='w-52' alt="jjj" />
+                                                <p>{element.productName}</p>
+                                                <button className='bg-red-300' onClick={()=>dispatch(RemoveWishListItem(e.productId))}>remove</button>
+                                              </div>
+                                            </div>
+                                            </div>
+                                          </div>
                                         })
                                     }
                                 </div>
