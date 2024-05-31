@@ -1,30 +1,32 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import '../css/component.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCartItems, createOrder,ConfirmPayment, deleteCartItem, updateQuantityInCart, InitializePayment } from '../App/Thunk/ProductThunk';
+import { getAllCartItems, createOrder, ConfirmPayment, deleteCartItem, updateQuantityInCart, InitializePayment } from '../App/Thunk/ProductThunk';
 import Cookies from 'js-cookie';
 
 const CartPage = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState();
+    const [city, setCity] = useState();
+    const [amount, setAmount] = useState(0)
+    const [address, setAddress] = useState('');
     const dispatch = useDispatch();
     const carts = useSelector(state => state.product.cart);
-    const paymentStatus=useSelector(state=>state.product.paymentStatus);
-    console.log("paymentStatus",paymentStatus);
+    const paymentStatus = useSelector(state => state.product.paymentStatus);
     const token = Cookies.get('token');
-    const[name,setName]=useState('');
-    const[email,setEmail]=useState('');
-    const[phoneNumber,setPhoneNumber]=useState();
-    const[city,setCity]=useState();
-    const[amount,setAmount]=useState(0)
-    const[address,setAddress]=useState('');
     useEffect(() => {
         dispatch(getAllCartItems(token));
-    },[])
+    }, [])
+    useEffect(() => {
+        const totalAmount = carts.reduce((total, item) => total + item.quantity * item.originalPrice, 0);
+        setAmount(totalAmount);
+    }, [carts])
     const updateCount = (productid, value) => {
         dispatch(updateQuantityInCart({ productId: productid, value: value, token: token }));
     }
-    //-----------------------------------------------------------
     const handleRazorpayPayment = async () => {
-        const response = await dispatch(InitializePayment({ name:name, email:email, phoneNumber:phoneNumber,customerCity:city, address: address, amount: 200 })).then(res => res.payload);
+        const response = await dispatch(InitializePayment({ name: name, email: email, phoneNumber: phoneNumber, customerCity: city, address: address, amount: 200 })).then(res => res.payload);
         const options = {
             key: `rzp_test_n2WhJM0xSFTrwb`,
             amount: response.amount,
@@ -37,8 +39,8 @@ const CartPage = () => {
             prefill: {
                 name: name,
                 email: email,
-                phoneNumber:phoneNumber,
-                city:city,
+                phoneNumber: phoneNumber,
+                city: city,
                 address: address,
             },
             theme: {
@@ -46,16 +48,17 @@ const CartPage = () => {
             }
         };
         const rzp1 = new window.Razorpay(options);
-         rzp1.open();
+        OrderCreate();
+        rzp1.open();
     }
     function getCurrentTimeISO() {
         const now = new Date();
         return now.toISOString();
     }
-    if(paymentStatus.razorpay_order_id){
-            console.log("paymentStatushi");
+        const OrderCreate=()=>{
+            if(paymentStatus.razorpay_order_id){
             dispatch(createOrder({orderId:paymentStatus.razorpay_order_id,customerName:name,customerEmail:email,customerPhoneNumber:phoneNumber,customerCity:city,customerHomeAddress:address,orderTime:getCurrentTimeISO(),OrderStatus:"Captured",Quantity:1,Price:200,transactionId:paymentStatus.razorpay_payment_id,ProductIds:[15]}))
-            console.log("paymentStatuslll");
+            }
         }
     return (
         <div className='mt-48 flex flex-col items-center'>{
@@ -88,23 +91,23 @@ const CartPage = () => {
                 <div className="modal-box">
                     <label className="input input-bordered flex items-center gap-2">
                         Name
-                        <input type="text" className="grow"  required onChange={e=>setName(e.target.value)}/>
+                        <input type="text" className="grow" required onChange={e => setName(e.target.value)} />
                     </label>
                     <label className="input input-bordered flex items-center gap-2">
                         Email
-                        <input type="text" className="grow"  required onChange={e=>setEmail(e.target.value)}/>
+                        <input type="text" className="grow" required onChange={e => setEmail(e.target.value)} />
                     </label>
                     <label className="input input-bordered flex items-center gap-2">
                         Phone
-                        <input type="text" className="grow"  required onChange={e=>setPhoneNumber(e.target.value)}/>
+                        <input type="text" className="grow" required onChange={e => setPhoneNumber(e.target.value)} />
                     </label>
                     <label className="input input-bordered flex items-center gap-2">
                         City
-                        <input type="text" className="grow"  required onChange={e=>setCity(e.target.value)}/>
+                        <input type="text" className="grow" required onChange={e => setCity(e.target.value)} />
                     </label>
                     <label className="input input-bordered flex items-center gap-2">
                         Address
-                        <input type="text" className="grow"  required onChange={e=>setAddress(e.target.value)}/>
+                        <input type="text" className="grow" required onChange={e => setAddress(e.target.value)} />
                     </label>
                     <button className="purchase-btn cartbtn max-w-72 min-h-14" onClick={handleRazorpayPayment}>Purchace</button>
                 </div>
