@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import '../css/component.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCartItems, createOrder, ConfirmPayment, deleteCartItem, updateQuantityInCart, InitializePayment } from '../App/Thunk/ProductThunk';
@@ -11,30 +11,47 @@ const CartPage = () => {
     const [city, setCity] = useState();
     const [amount, setAmount] = useState(0)
     const [address, setAddress] = useState('');
+    const [isPaymentConfirmed, setIsPaymentConfirmed] = useState(false); 
+    const [orderCreated, setOrderCreated] = useState(false);
     const dispatch = useDispatch();
     const carts = useSelector(state => state.product.cart);
     const paymentStatus = useSelector(state => state.product.paymentStatus);
     const token = Cookies.get('token');
+
     useEffect(() => {
         dispatch(getAllCartItems(token));
     }, [])
+
     useEffect(() => {
         const totalAmount = carts.reduce((total, item) => total + item.quantity * item.originalPrice, 0);
         setAmount(totalAmount);
     }, [carts])
+
     const updateCount = (productid, value) => {
         dispatch(updateQuantityInCart({ productId: productid, value: value, token: token }));
     }
+
+    function getCurrentTimeISO() {
+        const now = new Date();
+        return now.toISOString();
+    }
+
+    const product=carts.map(e=>{
+        return {ProductId:e.productId,quantity:e.quantity};
+    })
+
     const handleRazorpayPayment = async () => {
-        const response = await dispatch(InitializePayment({ name: name, email: email, phoneNumber: phoneNumber, customerCity: city, address: address, amount: 200 })).then(res => res.payload);
+        const response =await  dispatch(InitializePayment({ name: name, email: email, phoneNumber: phoneNumber, customerCity: city, address: address, amount: 200 })).then(res => res.payload);
+        console.log(response,"ll");
+        console.log("iam here at");
         const options = {
             key: `rzp_test_n2WhJM0xSFTrwb`,
-            amount: response.amount,
+            amount: 200,
             name: 'bibin',
             description: 'Pro Membership',
             order_id: response.id,
             handler: (response) => {
-                dispatch(ConfirmPayment(response))
+                dispatch(ConfirmPayment(response)).then(()=>{setIsPaymentConfirmed(true);});
             },
             prefill: {
                 name: name,
@@ -47,21 +64,17 @@ const CartPage = () => {
                 color: '#F37254'
             }
         };
-        const rzp1 = new window.Razorpay(options);
-        OrderCreate();
-        rzp1.open();
+        const rzp1 =await new window.Razorpay(options);
+        await rzp1.open(); 
     }
-    function getCurrentTimeISO() {
-        const now = new Date();
-        return now.toISOString();
-    }
-        const OrderCreate=()=>{
-            // console.log(paymentStatus.razorpay_order_id,"llhi");
-            if(paymentStatus.razorpay_order_id){
-            dispatch(createOrder({orderId:paymentStatus.razorpay_order_id,customerName:name,customerEmail:email,customerPhoneNumber:phoneNumber,customerCity:city,customerHomeAddress:address,orderTime:getCurrentTimeISO(),OrderStatus:"Captured",Quantity:1,Price:200,transactionId:paymentStatus.razorpay_payment_id,ProductIds:[15]}))
-            }
+    useEffect(()=>{
+        if(isPaymentConfirmed&&paymentStatus.razorpay_order_id&&!orderCreated){
+        setIsPaymentConfirmed(false);
+        setOrderCreated(true);
+        dispatch(createOrder({orderId:paymentStatus.razorpay_order_id,customerName:name,customerEmail:email,customerPhoneNumber:phoneNumber,customerCity:city,customerHomeAddress:address,orderTime:getCurrentTimeISO(),orderStatus:"Captured",price:200,transactionId:paymentStatus.razorpay_payment_id,product:product}));
         }
-    return (
+    },[isPaymentConfirmed, paymentStatus])
+    return (    
         <div className='mt-48 flex flex-col items-center'>{
             carts &&
             carts.map((e, i) => {

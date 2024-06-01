@@ -32,7 +32,6 @@ export const productSlice = createSlice({
     })
     builder.addCase(getAllCartItems.fulfilled, (state, action) => {
       state.cart = action.payload;
-      console.log(state.cart);
     })
     builder.addCase(deleteCartItem.fulfilled, (state, action) => {
       console.log(action.payload);

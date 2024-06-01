@@ -9,6 +9,7 @@ export const products=createAsyncThunk('allproducts',async()=>{
 })
 //Method for Update product
 export const  UpdateProduct=createAsyncThunk('UpdateProduct',async({id,formData})=>{
+    console.log(id,formData,"hhhhh");
     try{const token = Cookies.get('token');
     const res=await axios.put(`https://localhost:7288/api/Product/update-product?produtId=${id}`,formData,{
         headers:{
@@ -132,11 +133,11 @@ export const ConfirmPayment=createAsyncThunk('ConfirmPayment',async(response)=>{
     return response;
 })
 //method to create order
-export const createOrder=createAsyncThunk('createOrder',async({orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,transactionId,ProductIds})=>{
+export const createOrder=createAsyncThunk('createOrder',async({orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,orderStatus,price,transactionId,product})=>{
     const token = Cookies.get('token');
     console.log("Iam here at create oreder");
-    console.log(orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,ProductIds);
-    const res=await axios.post(`https://localhost:7288/api/Order/order`,{orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,OrderStatus,Quantity,Price,transactionId,ProductIds},{
+    console.log(orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,orderStatus,price,transactionId,product);
+    const res=await axios.post(`https://localhost:7288/api/Order/order`,{orderId,customerName,customerEmail,customerPhoneNumber,customerCity,customerHomeAddress,orderTime,orderStatus,price,transactionId,product},{
         headers:{
             Authorization:`Bearer ${token}`
         }
