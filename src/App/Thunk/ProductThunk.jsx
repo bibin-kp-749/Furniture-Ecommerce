@@ -181,11 +181,20 @@ export const TotalProductsPurchased=createAsyncThunk('TotalProductsPurchased',as
     console.log(res.data);
     return res.data
 })
-//method to create TotalProductsPurchased
+//method to get all order details
 export const OrderDetailsByAdmin=createAsyncThunk('OrderDetailsByAdmin',async(id)=>{
     const token = Cookies.get('token');
-    console.log("Iam here at Total OrderDetailsByAdmin",id);
     const res=await axios.get(`https://localhost:7288/api/Order/OrderDetailsByAdmin?userId=${id}`,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    return res.data
+})
+//method to get Order details
+export const Orderdetails=createAsyncThunk('OrderDetails',async(id)=>{
+    const token = Cookies.get('token');
+    const res=await axios.get(`https://localhost:7288/api/Order/OrderDetailsOfUser`,{
         headers:{
             Authorization:`Bearer ${token}`
         }

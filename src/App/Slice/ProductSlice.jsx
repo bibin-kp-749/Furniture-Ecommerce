@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { products } from "../Thunk/ProductThunk";
-import { searchProducts,AddWishList,TotalProductsPurchased,OrderDetailsByAdmin,TotalRevenue,RemoveWishListItem, createOrder, ConfirmPayment, deleteProduct, InitializePayment, getAllCartItems, addToCart, deleteCartItem, productById, updateQuantityInCart, getWishList, addproduct } from "../Thunk/ProductThunk"
+import { Orderdetails,searchProducts,AddWishList,TotalProductsPurchased,OrderDetailsByAdmin,TotalRevenue,RemoveWishListItem, createOrder, ConfirmPayment, deleteProduct, InitializePayment, getAllCartItems, addToCart, deleteCartItem, productById, updateQuantityInCart, getWishList, addproduct } from "../Thunk/ProductThunk"
 
 const initialState = {
   products: [],
@@ -71,6 +71,9 @@ export const productSlice = createSlice({
       state.totalProductPurchased=action.payload;
     })
     builder.addCase(OrderDetailsByAdmin.fulfilled, (state, action) => {
+      state.OrderDetails=action.payload;
+    })
+    builder.addCase(Orderdetails.fulfilled, (state, action) => {
       state.OrderDetails=action.payload;
     })
     builder.addCase(AddWishList.fulfilled, (state, action) => {

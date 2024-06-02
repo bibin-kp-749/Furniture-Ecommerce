@@ -21,38 +21,39 @@ const Navbar = () => {
         document.getElementById('my_modal_2').showModal();
         dispatch(getWishList(token));
     }
-    console.log(data, "lll");
     return (
-        <div id='navbar-section p-0' className={`${(id == '0001') ? 'hidden' : ''}`}>
+        <div id='navbar-section ' className={`${(id == '0001') ? 'hidden' : ''}`}>
             <div className="navbar  flex bg ">
                 <div className="w-20 mr-9 sm:mr-52 md:mr-96 lg:w-96" >
-                    <a className="btn btn-ghost text-xl" >FurPro</a>
+                    <a className="m-4 text-xl" >FurPro</a>
                 </div>
                 <div className=" gap-2 flex">
-                    <div className="form-control flex min-w-36 columns-2 flex-row bg-gray-200 rounded-md xl:ml-28">
-                        <div>
+                    <div className="form-control flex min-w-36 columns-2 flex-row bg-gray-200 rounded-md xl:ml-28 ">
+                        <div className="input bg-gray-200 text-black input-bordered w-28 h-10 md:w-auto border-none sm:w-44  lg:w-80 flex" >
                             <input type="text" placeholder="Search" onChange={e => {
                                 dispatch(searchItem(e.target.value))
-                            }} className="input bg-gray-200 text-black input-bordered w-28 h-10 md:w-auto border-none sm:w-44  lg:w-80" />
+                            }} />
+                        <div className='bg-gray-200 text-black flex justify-center items-center w-8 rounded-md xl:ml-24'>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70" onClick={() => navigate('search')}><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
                         </div>
-                        <div className='bg-gray-200 text-black flex justify-center items-center w-8 rounded-md'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70" onClick={() => navigate('search')}><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
-
                         </div>
                     </div>
                     <div >
                         {/* You can open the modal using document.getElementById('ID').showModal() method */}
-                        <button className="btn" onClick={WishListHandler}>open modal</button>
+                        <button  onClick={WishListHandler} className='mt-2 ml-6'>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="white" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                        </button>
                         <dialog id="my_modal_2" className="modal p-0">
-                            <div className="modal-box no-scrollbar">
+                            <div className="modal-box no-scrollbar" id='wishList'>
                                 <form method="dialog">
                                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                 </form>
                                 <div className='flex flex-col justify-center p-0 m-0'>
                                     {
                                         data.map((element, i) => {
-                                            console.log(element,"navnbar");
+                                            console.log(element, "navnbar");
                                             return (
-                                                <WishListCard value={element}/>
+                                                <WishListCard value={element} />
                                             )
                                         })
                                     }
@@ -60,21 +61,20 @@ const Navbar = () => {
                             </div>
                         </dialog>
                     </div>
-                    <div className="dropdown dropdown-end ml-1 md:ml-7">
-                        <Link to='cart'>
+                    <div className="dropdown dropdown-end ml-0 md:ml-7 ">
+                        <Link to='cart' className='flex justify-start'>
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                                 <div className="indicator">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                                    {/* <span className="badge badge-sm indicator-item"></span> */}Cart
+                                    {/* <span className="badge badge-sm indicator-item"></span> */}
                                 </div>
                             </div>
                         </Link>
                     </div>
                     <div className="dropdown pr-15 dropdown-end sm:ml-8">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
+                            <div className="w-10 rounded-full ">
                                 <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" className='w-1 h-1' />
-
                             </div>
                         </div>
                         <div>
@@ -96,7 +96,7 @@ const Navbar = () => {
                                         document.getElementById('my_modal_3').showModal();
                                     }}  > {id ? "logout" : "login"} </a>
                                     <dialog id="my_modal_3" className="modal ">
-                                        <div className="modal-box bg-gray-200">
+                                        <div className="modal-box bg-gray-100">
                                             <form method="dialog">
                                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                                 <LoginPage />
@@ -107,7 +107,7 @@ const Navbar = () => {
                             </li>
                             <li>
                                 <div >
-                                    <button >Order Details</button>
+                                 <Link to='orderdetails'>Order Details</Link>   
                                 </div>
                             </li>
                         </ul>

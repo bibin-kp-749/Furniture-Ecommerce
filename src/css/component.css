@@ -15,26 +15,40 @@ body{
 #navbar-section{
     width: 100%;
 }
-.bg{
+/* .bg{
     background-color: #7795a1           ;
     color: rgb(18, 18, 18);
-  }
+  } */
   .addtocart:hover{
     transform: scale(1.04,1.04);
     background-color: #456f7f;
     transition: 2s transform ease-in-out;
     box-shadow: 0px 12px  20px rgb(210, 210, 210);
   }
-  .register-btn:hover{
-    transform: scale(1.04,1.04);
-    background-color: #456f7f;
-    transition: 2s transform ease-in-out;
-    box-shadow: 0px 12px  20px rgb(210, 210, 210);
+  .register-btn{
+    background-color: #622830;
+    color: gainsboro;
   }
-  
+  .register-btn:hover{
+    background-color: #F5F5F5;
+    color: gray;
+    font-weight: 500;
+    border: 1px solid brown;
+  }
+  .footer{
+    border-width: 1px 0px 0px 0px;
+    border-color: #561C24;
+    border-style: solid;
+  }
+  .bar{
+    background-color: #F5F5F5;
+  }
 .navbar{
     width: 100%;
     height: 5rem;
+}
+.tab{
+    background-color: #F5F5F5;
 }
 .header-section{
   width: 100%;
@@ -67,11 +81,23 @@ body{
     border-radius: 10px;
 }
 .login-btn {
-    background-color: #7795a1;
+    background-color: #622830;
+    border-radius: 6px;
+}
+.block-btn{
+    background-color: #622830;
+    border:1px sol #4a1920;
+    color: #F5F5F5;
+    border-radius: 6px;
+}
+.block-btn:hover{
+    background-color: #F5F5F5;
+    border:1px solid #4a1920;
+    color: #4a1920;
     border-radius: 6px;
 }
 .login-btn:hover{
-   background-color: #395b69;
+   background-color: #4a1920;
 }
 .product-nav{
     z-index: 5;
@@ -104,9 +130,9 @@ body{
     transition: 1s transform ease-in-out;
     box-shadow: 0px 12px  20px rgb(210, 210, 210);
 }
-.cartbtn{
-    background-color: #7795a1           ;
-    color: rgb(18, 18, 18);
+#cartbtn{
+    background-color: #561C24,           ;
+    color: #F5F5F5;
 }
 .loginsvg,.login-heading{
     color:#38606e ;
@@ -117,7 +143,8 @@ body{
     box-shadow: 0px 12px  20px rgb(210, 210, 210);
 }
 .admin{
-    background-color: #7795a1;
+    background-color: #F5F5F5;
+    color:#561C24 ;
 }
 [aria-label] {
     font-weight: 600;

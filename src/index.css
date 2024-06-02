@@ -21,7 +21,10 @@
 .navlink{
   background-color: #abbcc3d6;
 }
-
+.color{
+  background-color: #F5F5F5           ;
+  color: #561C24;
+}
 
 body {
   margin: 0;
@@ -32,4 +35,10 @@ body {
   width: 100%;
   background-color: rgb(244, 244, 244);
   min-height: 100vh;
+}
+.navlink{
+  border-width: 1px 0px 1px 0px;
+  border-color: #561C24;
+  border-style: solid;
+  /* margin: 0px 10px 0px 10px; */
 }

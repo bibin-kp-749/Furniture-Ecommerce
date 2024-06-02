@@ -3,14 +3,13 @@ import { useDispatch } from 'react-redux';
 import { RemoveWishListItem } from '../App/Thunk/ProductThunk';
 
 const WishListCard = ({value}) => {
-    let color="brown";
+    let color="white";
     const dispatch=useDispatch();
     console.log(value,"wishlist");
     return (
-        <div className="card w-96 bg-base-100 shadow-xl image-full p-0 m-6 justify-end">
+        <div className="card w-60 bg-base-100 shadow-xl image-full p-0 m-2 justify-end">
             <figure><img src={`https://localhost:7288${value.image}`} alt="Shoes" /></figure>
             <div className="card-body">
-                <h2 className="card-title"></h2>
                 <p></p>
                 <div className="card-actions justify-end">
                     <button onClick={()=>dispatch(RemoveWishListItem(value.productId))}>

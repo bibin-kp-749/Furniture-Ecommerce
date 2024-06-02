@@ -32,7 +32,7 @@ const Admin = () => {
 
                 <input type="radio" name="my_tabs_2" role="tab" className="tab min-h-14 min-w-32" aria-label="PRODUCTS" checked />
                 <div role="tabpanel" className="tab-content  bg-gray-100 text-black rounded-box p-6 min-h-screen ">
-                    <h1 className='font-semibold text-xl text-gray-700 mt-5'>PRODUCTS</h1>
+                    <h1 className='font-semibold text-xl text-rose-950 mt-5'>PRODUCTS</h1>
                     <AdminProductCard />
                 </div>
 

@@ -23,13 +23,13 @@ const Table = () => {
     <div className='sm:w-full w-full' >
       <div className='no-scrollbar overflow-auto '>
         <table className="table">
-          <thead className='font-semibold text-gray-800 text-md'>
+          <thead className='font-semibold text-red-950 text-md'>
             <tr>
               <th>
               </th>
               <th>USER NAME</th>
               <th>EMAIL</th>
-              <th>PHONE NUMBER</th>
+              {/* <th>PHONE NUMBER</th> */}
               <th></th>
             </tr>
           </thead>
@@ -53,12 +53,12 @@ const Table = () => {
                     <td>
                       <p>{e.email}</p>
                     </td>
-                    <td>
+                    {/* <td>
                       <p>{e.phone}</p>
-                    </td>
+                    </td> */}
                     <td className='flex justify-end'>
-                      <button className='login-btn w-24 font-medium h-10 m-2 text-gray-900' onClick={() => Delete(e.id)}>Delete</button>
-                      <button className='login-btn w-24 h-10 m-2 font-medium text-gray-900' onClick={() => blockAndUnBlock(e.userId, e.isstatus)}>{(e.isstatus == true) ? "Block" : "UnBlock"}</button>
+                      {/* <button className='login-btn w-24 font-medium h-10 m-2 text-gray-900' onClick={() => Delete(e.id)}>Delete</button> */}
+                      <button className='block-btn w-24 h-10 m-2 font-medium ' onClick={() => blockAndUnBlock(e.userId, e.isstatus)}>{(e.isstatus == true) ? "Block" : "UnBlock"}</button>
                     </td>
                   </tr>
                 )

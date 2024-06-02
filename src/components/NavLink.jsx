@@ -6,7 +6,7 @@ const NavLink = () => {
   const id = localStorage.getItem('id');
   return (
     <div className={`navlink min-w-96 ${(id == '0001') ? 'hidden' : ''}`}>
-      <ul className='no-scrollbar flex justify-evenly text-black   h-10 align-middle overflow-scroll '>
+      <ul className='no-scrollbar flex justify-evenly color   h-10 align-middle overflow-scroll '>
         <li className='flex items-center font-sans min-w-32'>
           <Link to="/products" state={{ from: "offers" }}>Offers</Link>
         </li>

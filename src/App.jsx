@@ -14,6 +14,7 @@ import { Route, Routes } from 'react-router-dom'
 import Footer from './components/Footer'
 import {useJwt} from "react-jwt"
 import Cookies from 'js-cookie'
+import OrderDetails from './components/OrderDetails'
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path='search' element={<Search />} />
             <Route path='admin/addproduct' element={<AddProduct />} />
             <Route path='admin/addproduct/:id' element={<AddProduct/>}/>
+            <Route path='orderdetails' element={<OrderDetails/>}/>
             {/* <Route path='wishList' element={<Wish}
             <Route path='wishList/:id' element={<Hero/>}/> */}
             {/* <Route path='/admin' element={<Admin />} />

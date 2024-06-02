@@ -4,7 +4,7 @@ const Footer = () => {
   const id = localStorage.getItem('id');
   return (
     <div style={{ marginTop: '2vh' }} className={`${(id == '0001') ? 'hidden' : ''}`}>
-      <footer className="footer footer-center p-10 bg   rounded  bottom-0 mt-24">
+      <footer className="footer footer-center p-10 bg   rounded  bottom-0 mt-24 bg-gray-100">
         <nav className="grid grid-flow-col gap-4">
           <a className="link link-hover">About us</a>
           <a className="link link-hover">Contact</a>

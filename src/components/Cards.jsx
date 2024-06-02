@@ -10,9 +10,9 @@ const Cards = ({ value, color }) => {
         color="red";
     return (
         <div >
-            <div className="card product-card  w-72 glass p-0 m-5 ">
-                <figure><img src={value.image} alt="Furniture Image" className='text-black' /></figure>
-                <div className="card-body">
+            <div className="card product-card  w-72 h-96 glass p-0 m-5 flex">
+                <figure className='flex-1'><img src={value.image} alt="Furniture Image" className='h-full' /></figure>
+                <div className="card-body flex-1">
                     <p className='text-gray-700 font-semibold font-sans text-xl '>{value.productName}</p>
                     <p className='text-gray-900 font-medium font-mono mb-3'>{value.productCaption}</p>
                     <p className='text-gray-800 font-mono font-semibold '>PRICE : ₹{value.originalPrice}</p>
