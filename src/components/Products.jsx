@@ -13,6 +13,7 @@ const Products = () => {
   const value = useSelector(state => state.product.products);
   const location = useLocation();
   const from = location.state?.from;
+  let color="white";
   useEffect(() => {
     dispatch(products());
   }, [])
@@ -22,7 +23,7 @@ const Products = () => {
         {value &&
           value?.map((e, i) => {
               return (
-                <Link key={i} to={`${e.productId}`}><Cards value={e} /></Link>)
+                <Link key={i} to={`${e.productId}`}><Cards value={e}  color={color}/></Link>)
           })
         }
 

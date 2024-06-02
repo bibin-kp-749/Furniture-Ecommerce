@@ -7,20 +7,21 @@ import Cookies from 'js-cookie'
 import '../App.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchItem } from '../App/Slice/searchSlice'
-import { getWishList,RemoveWishListItem } from '../App/Thunk/ProductThunk'
+import { getWishList, RemoveWishListItem } from '../App/Thunk/ProductThunk'
+import WishListCard from './WishListCard'
 
 const Navbar = () => {
     const dispatch = useDispatch();
-    const data=useSelector(state=>state.product.wishList)
+    const data = useSelector(state => state.product.wishList)
     let name = localStorage.getItem('name');
     const navigate = useNavigate();
     const token = Cookies.get('token');
     const id = localStorage.getItem('id');
-    const WishListHandler=async ()=>{
+    const WishListHandler = async () => {
         document.getElementById('my_modal_2').showModal();
         dispatch(getWishList(token));
     }
-    console.log(data,"lll");
+    console.log(data, "lll");
     return (
         <div id='navbar-section p-0' className={`${(id == '0001') ? 'hidden' : ''}`}>
             <div className="navbar  flex bg ">
@@ -38,28 +39,21 @@ const Navbar = () => {
 
                         </div>
                     </div>
-                    <div>
+                    <div >
                         {/* You can open the modal using document.getElementById('ID').showModal() method */}
                         <button className="btn" onClick={WishListHandler}>open modal</button>
-                        <dialog id="my_modal_2" className="modal">
-                            <div className="modal-box">
+                        <dialog id="my_modal_2" className="modal p-0">
+                            <div className="modal-box no-scrollbar">
                                 <form method="dialog">
                                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                 </form>
-                                <div>
+                                <div className='flex flex-col justify-center p-0 m-0'>
                                     {
-                                        data.map((element,i )=> {
-                                            return <div className="indicator">
-                                                <div className="skeleton w-32 h-32">
-                                            <div className="card border ">
-                                              <div className="card-body max-w-52">
-                                                <img src={`https://localhost:7288${element.image}`} className='w-52' alt="jjj" />
-                                                <p>{element.productName}</p>
-                                                <button className='bg-red-300' onClick={()=>dispatch(RemoveWishListItem(e.productId))}>remove</button>
-                                              </div>
-                                            </div>
-                                            </div>
-                                          </div>
+                                        data.map((element, i) => {
+                                            console.log(element,"navnbar");
+                                            return (
+                                                <WishListCard value={element}/>
+                                            )
                                         })
                                     }
                                 </div>
@@ -109,6 +103,11 @@ const Navbar = () => {
                                             </form>
                                         </div>
                                     </dialog>
+                                </div>
+                            </li>
+                            <li>
+                                <div >
+                                    <button >Order Details</button>
                                 </div>
                             </li>
                         </ul>

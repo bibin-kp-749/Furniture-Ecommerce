@@ -72,6 +72,9 @@ const CartPage = () => {
         setIsPaymentConfirmed(false);
         setOrderCreated(true);
         dispatch(createOrder({orderId:paymentStatus.razorpay_order_id,customerName:name,customerEmail:email,customerPhoneNumber:phoneNumber,customerCity:city,customerHomeAddress:address,orderTime:getCurrentTimeISO(),orderStatus:"Captured",price:200,transactionId:paymentStatus.razorpay_payment_id,product:product}));
+        // product.map(e=>{
+        //     dispatch(deleteCartItem(e.ProductId))
+        // })
         }
     },[isPaymentConfirmed, paymentStatus])
     return (    

@@ -12,27 +12,8 @@ const LoginForm = () => {
   const token = useSelector(state => state.user.jwt);
   let count = 0;
   const submit = () => {
-    // data.filter(e => {
-    //console.log(e,"jjjj");
-    // if (email == "admin@gmail.com" && password == "admin12345") {
-    //   count = 1;
-    //   localStorage.setItem('id', '0001');
-    //   localStorage.setItem('name', 'admin');
-    //   navigate('/admin');
-    //   window.location.reload();
-    // } else if (e.email == email && e.password == password && e.status == true) {
-    //   count = 1;
-    //   localStorage.setItem('id', e.id);
-    //   localStorage.setItem('name', e.username);
-    //   navigate('/');
-    // } else {
-    //   null
-    // }
     dispatch(loginUser(data));
-  }//);
-  // (count == 1) ? window.alert("Login successfully") : window.alert("email and password doesn't match");
-  // setEmail(''); setPassword('');
-  //}
+  }
   token &&
     Cookies.set('token', token, { expires: 7, secure: true });
   return (

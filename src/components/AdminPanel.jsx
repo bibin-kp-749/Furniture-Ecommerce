@@ -61,6 +61,10 @@ const AdminPanel = () => {
   <input type="text" id='ip' placeholder="Type here" className="input input-bordered w-full max-w-xs" onChange={e=>setUserId(e.target.value)}/>
   <button className='bg-slate-600' onClick={()=>OrderDetails(userId)}>Submit</button><br /><br />
   <br /><br />
+  <div className="radial-progress" style={{ "--value": "70", "--size": "12rem", "--thickness": "2px" }} role="progressbar">70%</div>
+<div className="radial-progress" style={{ "--value": "70", "--size": "12rem", "--thickness": "2rem" }} role="progressbar">70%</div>
+<br />
+<br />
   {
     details&&
     details.map(e=>{

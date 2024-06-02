@@ -99,14 +99,26 @@ export const  getWishList=createAsyncThunk('getWishList',async(token)=>{
     })
     return res.data
 })
+//method for Add wishList
+export const  AddWishList=createAsyncThunk('AddWishList',async(id)=>{
+    const token = Cookies.get('token');
+    const res=await axios.post(`https://localhost:7288/api/product/wishlist/AddWishList?ProdctId=${id}`,null,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    return true;
+})
 //method for deleting wishList
 export const  RemoveWishListItem=createAsyncThunk('RemoveWishListItem',async(id)=>{
     const token = Cookies.get('token');
+    console.log(id);
     const res=await axios.delete(`https://localhost:7288/api/product/wishlist/${id}`,{
         headers:{
             Authorization:`Bearer ${token}`
         }
     })
+    console.log(res.data);
     return res.data
 })
 //method for initializing payment
