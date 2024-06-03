@@ -7,6 +7,7 @@ const WishListCard = ({value}) => {
     const dispatch=useDispatch();
     console.log(value,"wishlist");
     return (
+        
         <div className="card w-60 bg-base-100 shadow-xl image-full p-0 m-2 justify-end">
             <figure><img src={`https://localhost:7288${value.image}`} alt="Shoes" /></figure>
             <div className="card-body">

@@ -13,7 +13,7 @@ const Products = () => {
   const value = useSelector(state => state.product.products);
   const location = useLocation();
   const from = location.state?.from;
-  let color="white";
+  let color = "white";
   useEffect(() => {
     dispatch(products());
   }, [])
@@ -22,11 +22,10 @@ const Products = () => {
       <div className='products-item flex flex-wrap  justify-evenly ' style={{ marginTop: '10rem' }} id='products-item '>
         {value &&
           value?.map((e, i) => {
-              return (
-                <Link key={i} to={`${e.productId}`}><Cards value={e}  color={color}/></Link>)
+            return (
+              <Link key={i} to={`${e.productId}`}><Cards value={e} color={color} /></Link>)
           })
         }
-
       </div>
     </>
   )

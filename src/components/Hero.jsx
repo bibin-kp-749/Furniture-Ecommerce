@@ -14,11 +14,12 @@ const Hero = () => {
   const token = Cookies.get('token');
   //const carts = useSelector(state => state.products.cart);
   const { id } = useParams(); 
+  console.log(id);
   useEffect(() => {
     dispatch(productById(id));
   }, [])
   const handle = () => {
-    dispatch(addToCart({id:16,token:token}))
+    dispatch(addToCart(id))
   };
  if(product)
   return (

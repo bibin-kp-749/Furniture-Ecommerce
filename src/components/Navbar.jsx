@@ -53,7 +53,9 @@ const Navbar = () => {
                                         data.map((element, i) => {
                                             console.log(element, "navnbar");
                                             return (
+                                                // <Link key={i} to={`products/${element.productId}`}>
                                                 <WishListCard value={element} />
+                                                // </Link>
                                             )
                                         })
                                     }
@@ -89,12 +91,12 @@ const Navbar = () => {
                             </li>
                             <li>
                                 <div >
-                                    <a className="w-24 h-2 flex items-center   font-medium  rounded-lg mb-1 mt-3" onClick={id ? () => {
-
-                                        navigate('/');
+                                    <a className="w-24 h-2 flex items-center   font-medium  rounded-lg mb-1 mt-3" onClick={token ? () => {
+                                        if (window.confirm('Are you sure you wish to delete this item?')) {Cookies.remove('token');
+                                        navigate('/')};
                                     } : () => {
                                         document.getElementById('my_modal_3').showModal();
-                                    }}  > {id ? "logout" : "login"} </a>
+                                    }}  > {token ? "logout" : "login"} </a>
                                     <dialog id="my_modal_3" className="modal ">
                                         <div className="modal-box bg-gray-100">
                                             <form method="dialog">

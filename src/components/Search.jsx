@@ -2,6 +2,7 @@ import React, {useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { searchProducts } from '../App/Thunk/ProductThunk'
+import { Link } from 'react-router-dom'
 
 const Search = () => {
     const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Search = () => {
             {
                 values && values.map((e,i) => {
                         return (
+                            <Link key={i} to={`${e.productId}`}>
                             <div key={i} className="card w-80 glass p-0 m-5">
                                 <figure><img src={`https://localhost:7288${e.image}`} alt="Furniture Image" className='text-black' /></figure>
                                 <div className="card-body">
@@ -28,6 +30,7 @@ const Search = () => {
                                     </div>
                                 </div>
                             </div>
+                            </Link>
                         )
                 })
             }

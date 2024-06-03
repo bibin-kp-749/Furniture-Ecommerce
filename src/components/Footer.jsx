@@ -1,9 +1,14 @@
 import React from 'react'
+import Cookies from 'js-cookie';
+import { useJwt } from 'react-jwt';
 
 const Footer = () => {
-  const id = localStorage.getItem('id');
+  const token = Cookies.get('token');
+  const {decodedToken}=useJwt(token);
+  const role=decodedToken?.role
+  if(role!="Admin")
   return (
-    <div style={{ marginTop: '2vh' }} className={`${(id == '0001') ? 'hidden' : ''}`}>
+    <div style={{ marginTop: '2vh' }}>
       <footer className="footer footer-center p-10 bg   rounded  bottom-0 mt-24 bg-gray-100">
         <nav className="grid grid-flow-col gap-4">
           <a className="link link-hover">About us</a>

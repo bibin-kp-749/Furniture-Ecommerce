@@ -47,6 +47,7 @@ export const deleteProduct=createAsyncThunk('deleteProduct',async(id)=>{
 })
 //Method for get product by Id
 export const productById=createAsyncThunk('productById',async(id)=>{
+    console.log(id,"ll");
     const res=await axios.get(`https://localhost:7288/api/Product/ProductId?ProductId=${id}`);
     return res.data
 })
@@ -73,7 +74,8 @@ export const getAllCartItems=createAsyncThunk('getAllCartItems',async(token)=>{
     return res.data;
 })
 //Method to delete the cartItems
-export const  deleteCartItem=createAsyncThunk('deleteCartItem',async({id,token})=>{
+export const  deleteCartItem=createAsyncThunk('deleteCartItem',async(id)=>{
+    const token = Cookies.get('token');
     const res=await axios.delete(`https://localhost:7288/api/Cart/remove-product?productId=${id} `,{
         headers:{
             Authorization:`Bearer ${token}`,

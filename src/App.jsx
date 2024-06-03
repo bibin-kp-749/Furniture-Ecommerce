@@ -37,6 +37,7 @@ function App() {
             <Route path='admin/addproduct' element={<AddProduct />} />
             <Route path='admin/addproduct/:id' element={<AddProduct/>}/>
             <Route path='orderdetails' element={<OrderDetails/>}/>
+            <Route path='search/:id' element={<Hero />} />
             {/* <Route path='wishList' element={<Wish}
             <Route path='wishList/:id' element={<Hero/>}/> */}
             {/* <Route path='/admin' element={<Admin />} />

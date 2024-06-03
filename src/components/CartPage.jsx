@@ -26,8 +26,7 @@ const CartPage = () => {
         const totalAmount = carts.reduce((total, item) => total + item.quantity * item.originalPrice, 0);
         setAmount(totalAmount);
     }, [carts])
-
-    const updateCount = (productid, value) => {
+    function updateCount(productid, value){
         dispatch(updateQuantityInCart({ productId: productid, value: value, token: token }));
     }
 
@@ -37,11 +36,13 @@ const CartPage = () => {
     }
 
     const product = carts.map(e => {
+        console.log(e);
         return { ProductId: e.productId, quantity: e.quantity };
     })
 
     const handleRazorpayPayment = async () => {
-        const response = await dispatch(InitializePayment({ name: name, email: email, phoneNumber: phoneNumber, customerCity: city, address: address, amount: 200 })).then(res => res.payload);
+        console.log(amount,"kkk");
+        const response = await dispatch(InitializePayment({ name: name, email: email, phoneNumber: phoneNumber, customerCity: city, address: address, amount: amount })).then(res => res.payload);
         console.log(response, "ll");
         console.log("iam here at");
         const options = {
@@ -71,10 +72,10 @@ const CartPage = () => {
         if (isPaymentConfirmed && paymentStatus.razorpay_order_id && !orderCreated) {
             setIsPaymentConfirmed(false);
             setOrderCreated(true);
-            dispatch(createOrder({ orderId: paymentStatus.razorpay_order_id, customerName: name, customerEmail: email, customerPhoneNumber: phoneNumber, customerCity: city, customerHomeAddress: address, orderTime: getCurrentTimeISO(), orderStatus: "Captured", price: 200, transactionId: paymentStatus.razorpay_payment_id, product: product }));
-            // product.map(e=>{
-            //     dispatch(deleteCartItem(e.ProductId))
-            // })
+            dispatch(createOrder({ orderId: paymentStatus.razorpay_order_id, customerName: name, customerEmail: email, customerPhoneNumber: phoneNumber, customerCity: city, customerHomeAddress: address, orderTime: getCurrentTimeISO(), orderStatus: "Captured", price: amount, transactionId: paymentStatus.razorpay_payment_id, product: product }));
+            product.map(e=>{
+                dispatch(deleteCartItem(e.ProductId))
+            })
         }
     }, [isPaymentConfirmed, paymentStatus])
     return (
@@ -93,12 +94,12 @@ const CartPage = () => {
                                         <p className='self-center text-rose-950'>Quantity : {e.quantity}&nbsp;&nbsp;</p>
                                     </div>
                                     <div className='flex flex-col p-0 '>
-                                        <button onClick={() => updateCount(e.productId, 1)}><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <button onClick={() => updateCount(e.productId, 1)}><svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                             <path stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.881 16H7.119a1 1 0 0 1-.772-1.636l4.881-5.927a1 1 0 0 1 1.544 0l4.88 5.927a1 1 0 0 1-.77 1.636Z" />
                                         </svg>
                                         </button>
                                         <button onClick={() => updateCount(e.productId, -1)}>
-                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.119 8h9.762a1 1 0 0 1 .772 1.636l-4.881 5.927a1 1 0 0 1-1.544 0l-4.88-5.927A1 1 0 0 1 7.118 8Z" />
                                             </svg>
                                         </button>
@@ -107,7 +108,7 @@ const CartPage = () => {
                                 <p className='text-xl font-bold text-gray-900'>PRICE - ₹{e.quantity * e.originalPrice} </p>
                             </div>
                             <div className="card-actions justify-end">
-                                <button className="btn cartbtn bg-rose-950 text-white hover:bg-white hover:text-rose-950" onClick={() => dispatch(deleteCartItem({ id: e.productId, token: token }))}>DELETE</button>
+                                <button className="btn cartbtn bg-rose-950 text-white hover:bg-white hover:text-rose-950" onClick={() => dispatch(deleteCartItem(e.productId))}>DELETE</button>
                             </div>
                         </div>
                     </div>

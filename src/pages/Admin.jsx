@@ -5,14 +5,15 @@ import Table from '../components/Table'
 import { useNavigate } from 'react-router-dom'
 import '../css/component.css'
 import AdminPanel from '../components/AdminPanel'
+import Cookies from 'js-cookie'
 
 const Admin = () => {
     const navigate = useNavigate();
     const Logout = () => {
-        localStorage.removeItem('id');
-        localStorage.removeItem('name');
-        navigate('/');
-        window.location.reload();
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+            Cookies.remove('token');
+            navigate('/')
+        }
     }
     return (
         <div className='admin min-h-screen w-screen '>
@@ -20,9 +21,8 @@ const Admin = () => {
                 <button className=' sm:mr-10 sm:mt-14 h:10 w-20 mr-2 m-5 bg-gray-300 text-gray-800 sm:w-24 sm:h-10 hover:bg-gray-700 hover:text-white font-semibold rounded-md' onClick={Logout}>LogOut</button>
             </div>
             <div role="tablist" className="tabs tabs-lifted ">
-            <input type="radio" name="my_tabs_2" role="tab" className="tab min-h-14 min-w-32" aria-label="ADD PRODUCTS" />
+                <input type="radio" name="my_tabs_2" role="tab" className="tab min-h-14 min-w-32" aria-label="ADD PRODUCTS" />
                 <div role="tabpanel" className="tab-content  bg-gray-100 text-black  rounded-box p-6 min-h-screen sm:w-screen md:min-w-full ">
-                
                     <AdminPanel />
                 </div>
                 <input type="radio" name="my_tabs_2" role="tab" className="tab min-h-14 min-w-32" aria-label="USERS" />

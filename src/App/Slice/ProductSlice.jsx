@@ -38,8 +38,9 @@ export const productSlice = createSlice({
       alert("Deleted  successfully")
     })
     builder.addCase(updateQuantityInCart.fulfilled, (state, action) => {
-      window.alert("Updated")
-      window.location.reload()
+      // window.alert("Updated")
+      // window.location.reload()
+      console.log("hi");
     })
     builder.addCase(getWishList.fulfilled, (state, action) => {
       state.wishList = action.payload;

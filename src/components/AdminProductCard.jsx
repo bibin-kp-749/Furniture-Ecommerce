@@ -8,6 +8,7 @@ const AdminProductCard = () => {
   const [search, setSearch] = useState();
   const [category, setCategory] = useState("all");
   const product = useSelector(state => state.product.products);
+  console.log(product);
   const Delete = (id) => {
     dispatch(deleteProduct(id));
   }
@@ -43,10 +44,12 @@ const AdminProductCard = () => {
             <div key={i} className='mb-8 flex justify-center md:4/6'>
               <div className="card card-side bg-gray-200 shadow-xl flex flex-wrap p-0 rounded-md sm:w-5/6 md:2/6">
                 <figure className='max-w-full'><img src={e.image} alt="Movie" className='w-full rounded-md sm:w-60 md:w-full md:h-72' /></figure>
-                <div className="card-body sm:flex-1 md:flex-1">
-                  <h2 className="card-title">{e.productName}</h2>
-                  <p>{e.productCaption}</p>
+                <div className="card-body sm:flex-1 md:flex-1 flex justify-center">
+                  <h2 className="card-title flex justify-center text-rose-950">{e.productName}</h2>
+                  <p className='font-mono'>{e.productCaption}</p>
+                  <p>Quantity : {e.stock}</p>
                   <p>{e.originalPrice}</p>
+                  <p></p>
                   <div className="card-actions justify-end">
                     <Link to={`addproduct/${e.productId}`}><button className="btn bg-rose-950 text-white hover:bg-white hover:text-rose-950 hover:border-rose-950" >Edit</button></Link>
                     <button className="btn bg-rose-950 text-white hover:bg-white hover:text-rose-950 hover:border-rose-950" onClick={() => Delete(e.productId)}>Delete</button>
