@@ -26,7 +26,7 @@ function App() {
       <div>
           <Header />
           <Routes>
-            {role=="Admin" ? <Route path='/admin' element={<Admin />} /> : null}
+            {role=="Admin" ? <Route path='admin' element={<Admin />} /> : null}
             <Route path='/' element={<HomePage />} />
             <Route path='products' element={<Products />} />
             <Route path='products/:id' element={<Hero />} />

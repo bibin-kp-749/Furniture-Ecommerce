@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { products } from "../Thunk/ProductThunk";
-import { Orderdetails,searchProducts,AddWishList,TotalProductsPurchased,OrderDetailsByAdmin,TotalRevenue,RemoveWishListItem, createOrder, ConfirmPayment, deleteProduct, InitializePayment, getAllCartItems, addToCart, deleteCartItem, productById, updateQuantityInCart, getWishList, addproduct } from "../Thunk/ProductThunk"
+import {  products } from "../Thunk/ProductThunk";
+import { Orderdetails,getTypes,Categories,searchProducts,AddWishList,TotalProductsPurchased,OrderDetailsByAdmin,TotalRevenue,RemoveWishListItem, createOrder, ConfirmPayment, deleteProduct, InitializePayment, getAllCartItems, addToCart, deleteCartItem, productById, updateQuantityInCart, getWishList, addproduct } from "../Thunk/ProductThunk"
 
 const initialState = {
   products: [],
@@ -10,7 +10,9 @@ const initialState = {
   paymentStatus: {},
   TotalRevenue:0,
   totalProductPurchased:0,
-  OrderDetails:[]
+  OrderDetails:[],
+  categories:[],
+  types:[],
 }
 
 export const productSlice = createSlice({
@@ -79,6 +81,12 @@ export const productSlice = createSlice({
     })
     builder.addCase(AddWishList.fulfilled, (state, action) => {
       alert("added successfully");
+    })
+    builder.addCase(Categories.fulfilled, (state, action) => {
+      state.categories=action.payload;
+    })
+    builder.addCase(getTypes.fulfilled, (state, action) => {
+      state.types=action.payload;
     })
   },
 })

@@ -19,7 +19,7 @@ const Search = () => {
                         return (
                             <Link key={i} to={`${e.productId}`}>
                             <div key={i} className="card w-80 glass p-0 m-5">
-                                <figure><img src={`https://localhost:7288${e.image}`} alt="Furniture Image" className='text-black' /></figure>
+                                <figure><img src={e.image} alt="Furniture Image" className='text-black' /></figure>
                                 <div className="card-body">
                                 <h1 className='text-black'>{e.productName}</h1>
                                     <p className='text-black'>{e.productCaption}</p>

@@ -19,7 +19,7 @@ const Hero = () => {
     dispatch(productById(id));
   }, [])
   const handle = () => {
-    dispatch(addToCart(id))
+    dispatch(addToCart({id}))
   };
  if(product)
   return (

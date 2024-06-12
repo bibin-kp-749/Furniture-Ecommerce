@@ -8,13 +8,13 @@ const AdminProductCard = () => {
   const [search, setSearch] = useState();
   const [category, setCategory] = useState("all");
   const product = useSelector(state => state.product.products);
-  console.log(product);
+  console.log(product,"hi");
   const Delete = (id) => {
     dispatch(deleteProduct(id));
   }
   useEffect(() => {
     dispatch(products());
-  }, [])
+  },[])
   useEffect(() => {
     dispatch(searchProducts(search));
   }, [search])

@@ -53,9 +53,9 @@ const Navbar = () => {
                                         data.map((element, i) => {
                                             console.log(element, "navnbar");
                                             return (
-                                                // <Link key={i} to={`products/${element.productId}`}>
+                                                 <Link key={i} to={`products/${element.productId}`} >
                                                 <WishListCard value={element} />
-                                                // </Link>
+                                                 </Link>
                                             )
                                         })
                                     }

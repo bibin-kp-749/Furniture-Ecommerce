@@ -1,10 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
+import toast,{ Toaster } from "react-hot-toast";
+
 
 //Method for get all products
 export const products=createAsyncThunk('allproducts',async()=>{
     const res= await axios.get('https://localhost:7288/api/Product/GetAllProducts');
+    (res.status==200)&&
+    toast.success("Products Loaded")
    return res.data;
 })
 //Method for Update product
@@ -46,18 +50,20 @@ export const deleteProduct=createAsyncThunk('deleteProduct',async(id)=>{
     });
 })
 //Method for get product by Id
-export const productById=createAsyncThunk('productById',async(id)=>{
+export const productById=createAsyncThunk('productById',async({id})=>{
     console.log(id,"ll");
     const res=await axios.get(`https://localhost:7288/api/Product/ProductId?ProductId=${id}`);
     return res.data
 })
 //Method for searching product 
 export const searchProducts=createAsyncThunk('searchProducts',async(product)=>{
+    product="b";
     const res=await axios.get(`https://localhost:7288/api/Product/searchItem?searchItem=${product}`);
     return res.data;
 })
 //Method for AddToCart
-export const addToCart=createAsyncThunk('addToCart',async({id,token})=>{
+export const addToCart=createAsyncThunk('addToCart',async({id})=>{
+    const token = Cookies.get('token');
     const res=await axios.post(`https://localhost:7288/api/Cart/${id}`,null,{
         headers:{
             Authorization:`Bearer ${token}`,
@@ -202,5 +208,25 @@ export const Orderdetails=createAsyncThunk('OrderDetails',async(id)=>{
         }
     })
     console.log(res.data);
+    return res.data
+})
+//method to get Categories
+export const Categories=createAsyncThunk('Categories',async()=>{
+    const token = Cookies.get('token');
+    const res=await axios.get(`https://localhost:7288/api/Product/getallcategories`,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
+    console.log(res.data);
+    return res.data
+})
+export const getTypes=createAsyncThunk('getTypes',async()=>{
+    const token = Cookies.get('token');
+    const res=await axios.get(`https://localhost:7288/api/Product/getalltypes`,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    })
     return res.data
 })
